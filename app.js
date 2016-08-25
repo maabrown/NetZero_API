@@ -3,8 +3,9 @@ var app = express();
 var bodyParser = require('body-parser');
 var load_doc = require('./app/models/load_model');
 var mongoose = require('mongoose');
+var cred = require('./app/cred/credentials');
 
-mongoose.connect('mongodb://username:password@ds055564.mlab.com:55564/woman_superhero_dev')
+mongoose.connect('mongodb://' + cred.username + ':' + cred.password + '@ds055564.mlab.com:55564/woman_superhero_dev')
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
