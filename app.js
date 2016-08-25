@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var load_doc = require('./app/models/load_model');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://mbrownii:C0mmerce2016@ds055564.mlab.com:55564/woman_superhero_dev')
+mongoose.connect('mongodb://username:password@ds055564.mlab.com:55564/woman_superhero_dev')
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
@@ -81,25 +81,59 @@ router.get('/data/subsystem/:subsystem', function(req,res) {
 
 });
 
-// router.get('/data/date/:date', function(req,res) {
+router.get('/data/date/:user_date', function(req,res) {
 
-//  load_doc.find({}).where({'TimeStampGPSTime' : '1904-01-01 00:00:00'}).exec(function(err,docs) {
-//      if (err) {
-//          console.log(err);
-//      } else {
-//          res.json(docs);
-//          console.log('working');
-//      }
-//  })
-// })
+ // load_doc.find({}).where({'TimeStampGPSTime' : '1904-01-01 00:00:00'}).exec(function(err,docs) {
+ //     if (err) {
+ //         console.log(err);
+ //     } else {
+ //         res.json(docs);
+ //         console.log('working');
+ //     }
+ // })
 
-// energy usage on friday  /1stFlLiEnUs?DAY='Sunday'
+ var match_IDs = [];
+ var date = req.params.user_date;
+ var date_reformatted = date.split("-");
+ var user_JS_date = new Date(date_reformatted[0], date_reformatted[1] - 1, date_reformatted[2]);
+ // res.send(user_JS_date);
 
-// router.get('/data/:subsystem/', function(req,res) {
+ load_doc.find({}, '_id TimeStampGPSTime').exec(function(err,docs) {
+    if (err) {
+        console.log(err)
+    } else {
+        for (var i =0;  i < docs.length; i++) {
+            console.log(docs[i].TimeStampGPSTime)
+            var doc_GPS_time = docs[i].TimeStampGPSTime.substr(0,10);
+            console.log(doc_GPS_time);
+            var doc_GPS_time_reformatted = doc_GPS_time.split("-");
+            var doc_JS_date = new Date(doc_GPS_time_reformatted[0], doc_GPS_time_reformatted[1] - 1, doc_GPS_time_reformatted[2]);
+
+            console.log(doc_JS_date);
+
+            if (user_JS_date.getTime() === doc_JS_date.getTime()) {
+                match_IDs.push(docs[i]._id);
+            }
+        }
+    }
+
+    matchIDfunction(match_IDs);
+    console.log(match_IDs);
+ })
+
+ function matchIDfunction(array) {
+    load_doc.find({ '_id' : { $in : match_IDs}}, '_id TimeStampGPSTime').exec(function(err, docs) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.json(docs);
+        }
+    })
+ }
+
+})
 
 
-
-// })
 
 app.use('/api', router);
 
