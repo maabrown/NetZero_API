@@ -31,6 +31,14 @@ router.route('/data')
         })
     });
 
+    // .get(function(req,res) {
+
+    //         all_data.find({}, function(err,docs) {
+    //             res.json(docs);
+    //         })
+    // })
+
+
 
 // checking the keys from the object to the param for mlab
 
