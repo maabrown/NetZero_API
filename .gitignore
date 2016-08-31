@@ -5,3 +5,7 @@ app/cred/credentials.js
 example.js
 Lighting.csv
 output.json
+all_data_sample.json
+all_data_sample_formatted.json
+
+bad_if_statement_example.js
