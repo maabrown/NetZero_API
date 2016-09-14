@@ -17,11 +17,20 @@ function changeJSON(srcPath, wrPath) {
 				var objec = {};
 				objec['DHW'] = {};
 				objec['LOAD'] = {};
-				objec['ELEC_CURRENT'] = {};
+				objec['ELEC'] = {};
+				objec['Timestamp'] = {};
+				objec['HVAC'] = {};
+				objec['IndEnv'] = {};
+				objec['MISC'] = {};
+				objec['OutEnv'] = {};
+				objec['PV'] = {};
+				objec['SHW'] = {};
+				objec['TimeStampOthers'] = {};
+				objec['VENT'] = {};
 				for (key in data[i]) {
 					
-					if (key.includes('ElecCurrent_')) {
-						objec['ELEC_CURRENT'][key] = data[i][key];
+					if (key.includes('Elec_')) {
+						objec['ELEC'][key] = data[i][key];
 					}
 					else if (key.includes('DHW_')) {
 						objec['DHW'][key] = data[i][key];			
@@ -29,9 +38,40 @@ function changeJSON(srcPath, wrPath) {
 					else if (key.includes('Load_')) {
 						objec['LOAD'][key] = data[i][key];
 					}
+					else if (key.includes('HVAC_')) {
+						objec['HVAC'][key] = data[i][key];
+					}
+					else if (key.includes('IndEnv_')) {
+						objec['IndEnv'][key] = data[i][key];
+					}
+					else if (key.includes('Misc_')) {
+						objec['MISC'][key] = data[i][key];
+					}
+					else if (key.includes('OutEnv_')) {
+						objec['OutEnv'][key] = data[i][key];
+					}
+					else if (key.includes('PV_')) {
+						objec['PV'][key] = data[i][key];
+					}
+					else if (key.includes('SHW_')) {
+						objec['SHW'][key] = data[i][key];
+					}
+					else if (key.includes('TimeStamp_')) {
+						objec['TimeStampOthers'][key] = data[i][key];
+					}
+					else if (key.includes('Vent_')) {
+						objec['VENT'][key] = data[i][key];
+					}
+					else if (key.includes('DayOf')) {
+						objec['TimeStampOthers'][key] = data[i][key];
+					}
+					else if (key.includes('Timestamp')) {
+						objec[key] = data[i][key];
+					}
 					else if (key ==='id') {
 						objec[key] = data[i][key];
 					}
+		
 					else {
 						console.log(key);
 					}
@@ -45,4 +85,4 @@ function changeJSON(srcPath, wrPath) {
 	})
 }
 
-changeJSON('../all_data_sample.json', '../all_data_sample_formatted.json');
+changeJSON('../all_data_sample.json', '../nestedoutput.json');

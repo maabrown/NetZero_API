@@ -4,7 +4,7 @@ var converter = new Converter({
 	toArrayString: true
 });
 
-var readStream = require('fs').createReadStream('../Lighting.csv');
-var writeStream = require('fs').createWriteStream('../output.json');
+var readStream = require('fs').createReadStream('../All-Subsystems.csv');
+var writeStream = require('fs').createWriteStream('../all-subsystems-json-array.json');
 
 readStream.pipe(converter).pipe(writeStream);
